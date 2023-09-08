@@ -16,10 +16,10 @@
         <button onclick="Submit()">Submit</button>
         <div id="output"></div>
         <script>
-            function Submit() {
+function Submit() {
     const people = document.getElementById("entry").value.split("\n");
     const partners = document.getElementById("partners").value;
-    if (partners > people.length - 1) {
+    if ((partners > people.length - 1)) {
         alert("You have more partners than people!");
         return;
     }
@@ -41,13 +41,13 @@
             if (partnered[partner].length > x) continue;
             break;
         }
-        if (pairs.includes([people[i], people[partner]]) || i == partner) {
+        if (pairs.includes(JSON.stringify([i, partner])) || i == partner) {
             x--;
             break;
         }
         partnered[i].push(partner);
         partnered[partner].push(i);
-        pairs.push([people[i], people[partner]]);
+        pairs.push(JSON.stringify([i, partner]));
     }
     //output results
     let output = "";
