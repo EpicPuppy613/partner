@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Partners</title>
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <strong>Enter People Below (1 Person Per Line)</strong><br>
+        <textarea id="entry" rows="25" cols="25"></textarea>
+        <br>
+        <strong>Numer of Partners:</strong> <input id="partners" type="number" value="12"><br>
+        <button onclick="Submit()">Submit</button>
+        <div id="output"></div>
+        <script>
+            function Submit() {
+    const people = document.getElementById("entry").value.split("\n");
+    const partners = document.getElementById("partners").value;
+    if (partners > people.length - 1) {
+        alert("You have more partners than people!");
+        return;
+    }
+    if (people.length % 2 == 1) {
+        people.push("Nobody");
+    }
+    //generate unique pairs for all people
+    let pairs = [];
+    let partnered = [];
+    for (let i = 0; i < people.length; i++) {
+        partnered.push([]);
+    }
+    //generate pairs
+    for (let x = 0; x < partners; x++) for (let i = 0; i < people.length; i++) {
+        if (partnered[i].length > x) continue;
+        let partner
+        while (true) {
+            partner = Math.floor(Math.random() * people.length);
+            if (partnered[partner].length > x) continue;
+            break;
+        }
+        if (pairs.includes([people[i], people[partner]]) || i == partner) {
+            x--;
+            break;
+        }
+        partnered[i].push(partner);
+        partnered[partner].push(i);
+        pairs.push([people[i], people[partner]]);
+    }
+    //output results
+    let output = "";
+    for (let i = 0; i < people.length; i++) {
+        output += "<h3>" + people[i] + "</h3>";
+        output += "<ol>";
+        for (let j = 0; j < partnered[i].length; j++) {
+            output += "<li>" + people[partnered[i][j]] + "</li>";
+        }
+        output += "</ol>";
+    }
+    document.getElementById("output").innerHTML = output;
+}
+        </script>
+    </body>
+</html>
